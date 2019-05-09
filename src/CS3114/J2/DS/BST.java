@@ -44,6 +44,11 @@ public class BST<T extends Comparable<? super T>> {
 			left = lt;
 			right = rt;
 		}
+		
+		public int compareTo(T x)
+		{
+			return element.compareTo(x);
+		}
 	}
 	
 	private BinaryNode root;
@@ -90,6 +95,11 @@ public class BST<T extends Comparable<? super T>> {
 		 throw new UnsupportedOperationException("Not implemented yet");
 	 }
 	 
+	 private T find(BinaryNode currNode, T elementToFind)
+	 {
+		 throw new UnsupportedOperationException("Not implemented yet");
+	 }
+	 
 	 // Delete element matching x from the BST, if present. Return true if
 	 // matching element is removed from the tree and false otherwise.
 	 // Pre: x is null or points to a valid object of type T
@@ -118,5 +128,10 @@ public class BST<T extends Comparable<? super T>> {
 	 public boolean equals(Object other)
 	 {
 		 throw new UnsupportedOperationException("Not implemented yet");
+	 }
+	 
+	 public BinaryNode getRoot()
+	 {
+		 return root;
 	 }
 }
