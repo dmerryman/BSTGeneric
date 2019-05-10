@@ -8,28 +8,74 @@ class BSTTest {
 
 	@Test
 	void testBST() {
-		BST testBST = new BST();
-		assertNull(testBST.getRoot());)
+		BST<Integer> testBST = new BST<Integer>();
+		assertNull(testBST.getRoot());
+		assertNull(testBST.getPool());
+		assertEquals(0, testBST.getPoolSize());
 	}
 
 	@Test
 	void testBSTInt() {
-		fail("Not yet implemented");
+		BST<Integer> testBST = new BST<Integer>(5);
+		assertNull(testBST.getRoot());
+		assertNull(testBST.getPool());
+		assertEquals(5, testBST.getPoolSize());
 	}
 
 	@Test
 	void testIsEmpty() {
-		fail("Not yet implemented");
+		BST<Integer> testBST = new BST<Integer>();
+		assertTrue(testBST.isEmpty());
 	}
 
 	@Test
 	void testFind() {
-		fail("Not yet implemented");
+		BST<Integer> testTree = new BST<Integer>();
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(75);
+		testTree.insert(60);
+		testTree.insert(80);
+		testTree.insert(55);
+		testTree.insert(70);
+		assertNull(testTree.find(500));
+		assertEquals(40, testTree.find(40));
+		assertEquals(60, testTree.find(60));
+		assertEquals(55, testTree.find(55));
 	}
 
 	@Test
 	void testInsert() {
-		fail("Not yet implemented");
+		BST<Integer> testTree = new BST<Integer>();
+		assertTrue(testTree.insert(50));
+		assertEquals(0, testTree.getRoot().compareTo(50));
+		assertFalse(testTree.insert(50));
+		assertEquals(0, testTree.getRoot().compareTo(50));
+		assertTrue(testTree.insert(30));
+		assertTrue(testTree.insert(40));
+		assertTrue(testTree.insert(75));
+		assertTrue(testTree.insert(60));
+		assertTrue(testTree.insert(80));
+		assertTrue(testTree.insert(55));
+		assertTrue(testTree.insert(70));
+		assertEquals(0, testTree.getRoot().compareTo(50));
+	}
+	
+	@Test
+	void testRemove()
+	{
+		BST<Integer> testTree = new BST<Integer>();
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(75);
+		testTree.insert(60);
+		testTree.insert(80);
+		testTree.insert(55);
+		testTree.insert(70);
+		testTree.remove(50);
+		//assertTrue(testTree.remove(50));
 	}
 
 	@Test

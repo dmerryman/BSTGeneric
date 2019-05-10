@@ -92,12 +92,29 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: the binary tree is unchanged
 	 public T find(T x)
 	 {
-		 throw new UnsupportedOperationException("Not implemented yet");
+		 return find(root, x);
 	 }
 	 
 	 private T find(BinaryNode currNode, T elementToFind)
 	 {
-		 throw new UnsupportedOperationException("Not implemented yet");
+		 if (currNode == null)
+		 {
+			 return null;
+		 }
+		 int comparisonResult = currNode.compareTo(elementToFind);
+		 if (comparisonResult == 0)
+		 {
+			 return currNode.element;
+		 }
+		 else if (comparisonResult > 0)
+		 {
+			 return find(currNode.left, elementToFind);
+		 }
+		 else if (comparisonResult < 0)
+		 {
+			 return find(currNode.right, elementToFind);
+		 }
+		 return null;
 	 }
 	 
 	 // Delete element matching x from the BST, if present. Return true if
@@ -106,7 +123,120 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: the binary tree does not contain x
 	 public boolean insert(T x)
 	 {
-		 throw new UnsupportedOperationException("Not implemented yet");
+		 int numElementsBeforeInsert = getNumberOfElementsInTree(root, 0);
+		 root = insert(root, x);
+		 return (numElementsBeforeInsert + 1 == getNumberOfElementsInTree(root, 0)); 
+	 }
+	 
+	 private BinaryNode insert(BinaryNode currNode, T elementToInsert)
+	 {
+		 if (currNode == null)
+		 {
+			 return new BinaryNode(elementToInsert);
+		 }
+		 int comparisonResult = currNode.compareTo(elementToInsert);
+		 if (comparisonResult > 0)
+		 {
+			 currNode.left = insert(currNode.left, elementToInsert);
+		 }
+		 else if (comparisonResult < 0)
+		 {
+			 currNode.right = insert(currNode.right, elementToInsert);
+		 }
+		 return currNode;
+	 }
+	 
+	 // Delete element matching x from the BST, if present. Return true if
+	 // matching element is removed from the tree and false otherwise.
+	 // Pre: x is null or points to a valid object of type T
+	 // Post: the binary tree does not contain x
+	 public boolean remove(T x)
+	 {
+		 int numElementsBeforeRemoval = getNumberOfElementsInTree(root, 0);
+		 root = remove(root, x);
+		 return (numElementsBeforeRemoval - 1 == getNumberOfElementsInTree(root, 0));
+	 }
+	 
+	 private BinaryNode remove(BinaryNode currNode, T elementToRemove)
+	 {
+		 if (currNode == null)
+		 {
+			 return currNode;
+		 }
+		 int comparisonResult = currNode.compareTo(elementToRemove);
+		 if (comparisonResult == 0)
+		 {
+			 // Element found.
+			 currNode = deleteHelper(currNode);
+		 }
+		 else if (comparisonResult > 0)
+		 {
+			 // Look left.
+			 currNode.left = remove(currNode.left, elementToRemove);
+		 }
+		 else if (comparisonResult < 0)
+		 {
+			 // Look right.
+			 currNode.right = remove(currNode.right, elementToRemove);
+		 }
+		 return currNode;
+	 }
+	 
+	 // Pre: currNode is not null.
+	 private BinaryNode deleteHelper(BinaryNode currNode)
+	 {
+		 int numberOfChildren = getNumberOfChildren(currNode);
+		 if (numberOfChildren == 0)
+		 {
+			 // Node is a leaf.
+			 currNode = null;
+		 }
+		 else if (numberOfChildren == 1)
+		 {
+			 if (currNode.left != null)
+			 {
+				 currNode = currNode.left;
+			 }
+			 else if (currNode.right != null)
+			 {
+				 currNode = currNode.right;
+			 }
+		 }
+		 else
+		 {
+			 // two children exists.
+			 return deleteRightMinimum(currNode.right);
+			 //throw new UnsupportedOperationException("Not implemented yet");
+		 }
+		 return currNode;
+	 }
+	 
+	 private BinaryNode deleteRightMinimum(BinaryNode currNode)
+	 {
+		 if (currNode.left.left != null)
+		 {
+			 deleteRightMinimum(currNode.left);
+		 }
+		 BinaryNode tempBinaryNode = currNode.left;
+		 currNode.left = null;
+		 return tempBinaryNode;
+		 //throw new UnsupportedOperationException("Not implemented yet");
+	 }
+	 
+	 private int getNumberOfChildren(BinaryNode node)
+	 {
+		 if ((node.left == null) && (node.right == null))
+		 	{
+			 return 0;
+			}
+		 else if ((node.left != null) && (node.right != null))
+		 {
+			 return 2;
+		 }
+		 else
+		 {
+			 return 1;
+		 }
 	 }
 	 
 	 // Remove from the tree all values y such that y > x, according to
@@ -133,5 +263,26 @@ public class BST<T extends Comparable<? super T>> {
 	 public BinaryNode getRoot()
 	 {
 		 return root;
+	 }
+	 
+	 public BinaryNode getPool()
+	 {
+		 return pool;
+	 }
+	 
+	 public int getPoolSize()
+	 {
+		 return pSize;
+	 }
+	 
+	 private int getNumberOfElementsInTree(BinaryNode currNode, int elementCount)
+	 {
+		 if (currNode != null)
+		 {
+			 elementCount++;
+			 elementCount = getNumberOfElementsInTree(currNode.left, elementCount);
+			 elementCount = getNumberOfElementsInTree(currNode.right, elementCount);
+		 }
+		 return elementCount;
 	 }
 }
