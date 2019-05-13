@@ -49,6 +49,11 @@ public class BST<T extends Comparable<? super T>> {
 		{
 			return element.compareTo(x);
 		}
+		
+		public T GetElement()
+		{
+			return element;
+		}
 	}
 	
 	private BinaryNode root;
@@ -167,7 +172,7 @@ public class BST<T extends Comparable<? super T>> {
 		 if (comparisonResult == 0)
 		 {
 			 // Element found.
-			 currNode = deleteHelper(currNode);
+			 currNode = deleteHelper(currNode); 
 		 }
 		 else if (comparisonResult > 0)
 		 {
@@ -182,46 +187,39 @@ public class BST<T extends Comparable<? super T>> {
 		 return currNode;
 	 }
 	 
-	 // Pre: currNode is not null.
 	 private BinaryNode deleteHelper(BinaryNode currNode)
 	 {
 		 int numberOfChildren = getNumberOfChildren(currNode);
 		 if (numberOfChildren == 0)
 		 {
-			 // Node is a leaf.
 			 currNode = null;
+			 return currNode;
 		 }
 		 else if (numberOfChildren == 1)
 		 {
 			 if (currNode.left != null)
 			 {
-				 currNode = currNode.left;
+				 return currNode.left;
 			 }
 			 else if (currNode.right != null)
 			 {
-				 currNode = currNode.right;
+				 return currNode.right;
 			 }
 		 }
-		 else
-		 {
-			 // two children exists.
-			 return deleteRightMinimum(currNode.right);
-			 //throw new UnsupportedOperationException("Not implemented yet");
-		 }
+		 currNode.element = getMinLeftElementOfRightSubtree(currNode.right);
 		 return currNode;
 	 }
 	 
-	 private BinaryNode deleteRightMinimum(BinaryNode currNode)
+	 private BinaryNode getMinLeftElementOfRightSubtree(BinaryNode currNode)
 	 {
-		 if (currNode.left.left != null)
+		 if (currNode.left != null)
 		 {
-			 deleteRightMinimum(currNode.left);
+			 return getMinLeftElementOfRightSubtree(currNode.left);
 		 }
-		 BinaryNode tempBinaryNode = currNode.left;
-		 currNode.left = null;
-		 return tempBinaryNode;
-		 //throw new UnsupportedOperationException("Not implemented yet");
-	 }
+		 T tempElement = currNode.element;
+		 currNode = null;
+		 return tempElement;
+	 } 
 	 
 	 private int getNumberOfChildren(BinaryNode node)
 	 {
@@ -284,5 +282,26 @@ public class BST<T extends Comparable<? super T>> {
 			 elementCount = getNumberOfElementsInTree(currNode.right, elementCount);
 		 }
 		 return elementCount;
+	 }
+	 
+	 public void printTree()
+	 {
+		 printTree(root, 0);
+	 }
+	 
+	 private void printTree(BinaryNode currNode, int level)
+	 {
+		 if (currNode != null)
+		 {
+			 StringBuilder sb = new StringBuilder();
+			 for (int i = 0; i < level; i++)
+			 {
+				 sb.append(' ');
+			 }
+			 sb.append(currNode.element);
+			 System.out.println(sb);
+			 printTree(currNode.left, level + 1);
+			 printTree(currNode.right, level + 1);
+		 }
 	 }
 }

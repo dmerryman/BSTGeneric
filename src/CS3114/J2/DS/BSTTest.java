@@ -75,6 +75,8 @@ class BSTTest {
 		testTree.insert(55);
 		testTree.insert(70);
 		testTree.remove(50);
+		testTree.printTree();
+		assertEquals(55, testTree.getRoot().GetElement());
 		//assertTrue(testTree.remove(50));
 	}
 
