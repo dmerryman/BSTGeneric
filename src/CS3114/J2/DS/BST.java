@@ -158,7 +158,9 @@ public class BST<T extends Comparable<? super T>> {
 	 public boolean remove(T x)
 	 {
 		 int numElementsBeforeRemoval = getNumberOfElementsInTree(root, 0);
+		 System.out.println("Tree has " + numElementsBeforeRemoval + " nodes before removal.");
 		 root = remove(root, x);
+		 System.out.println("Tree has " +  getNumberOfElementsInTree(root, 0) + " nodes after removal");
 		 return (numElementsBeforeRemoval - 1 == getNumberOfElementsInTree(root, 0));
 	 }
 	 
@@ -166,22 +168,27 @@ public class BST<T extends Comparable<? super T>> {
 	 {
 		 if (currNode == null)
 		 {
+			 System.out.println(" Element not found");
 			 return currNode;
 		 }
+		 System.out.println(" Comparing " + elementToRemove + " to " + currNode.element);
 		 int comparisonResult = currNode.compareTo(elementToRemove);
 		 if (comparisonResult == 0)
 		 {
 			 // Element found.
+			 System.out.println("  Removing element");
 			 currNode = deleteHelper(currNode); 
 		 }
 		 else if (comparisonResult > 0)
 		 {
 			 // Look left.
+			 System.out.println("  Proceeding left");
 			 currNode.left = remove(currNode.left, elementToRemove);
 		 }
 		 else if (comparisonResult < 0)
 		 {
 			 // Look right.
+			 System.out.println("  Proceeding right");
 			 currNode.right = remove(currNode.right, elementToRemove);
 		 }
 		 return currNode;
@@ -189,9 +196,11 @@ public class BST<T extends Comparable<? super T>> {
 	 
 	 private BinaryNode deleteHelper(BinaryNode currNode)
 	 {
+		 System.out.println("   Deleting node with " + currNode.element);
 		 int numberOfChildren = getNumberOfChildren(currNode);
 		 if (numberOfChildren == 0)
 		 {
+			 System.out.println("     No children. Basic removal");
 			 currNode = null;
 			 return currNode;
 		 }
@@ -199,14 +208,18 @@ public class BST<T extends Comparable<? super T>> {
 		 {
 			 if (currNode.left != null)
 			 {
+				 System.out.println("     Left Child only. Pulling up " + currNode.left.element);
 				 return currNode.left;
 			 }
 			 else if (currNode.right != null)
 			 {
+				 System.out.println("     Right Child only. Pulling up " + currNode.right.element);
 				 return currNode.right;
 			 }
 		 }
+		 System.out.println("     Two children. Complicated. Getting the minimum left element from root " + currNode.right.element);
 		 currNode.element = getMinLeftElementOfRightSubtree(currNode.right);
+		 System.out.println("     Deleting the minimum left element from root " + currNode.right.element);
 		 currNode.right = DeleteMinLeftElementOfRightSubtree(currNode.right);
 		 return currNode;
 	 }
@@ -225,7 +238,14 @@ public class BST<T extends Comparable<? super T>> {
 	 {
 		 if (currNode.left == null)
 		 {
-			 currNode = null;
+			 if (currNode.right != null)
+			 {
+				 currNode = currNode.right;
+			 }
+			 else
+			 {
+				 currNode = null;
+			 }
 		 }
 		 else
 		 {
