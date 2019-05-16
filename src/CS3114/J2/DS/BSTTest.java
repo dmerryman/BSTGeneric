@@ -80,6 +80,10 @@ class BSTTest {
 		assertEquals(55, testTree.getRoot().GetElement());
 		assertTrue(testTree.remove(55));
 		assertEquals(60, testTree.getRoot().GetElement());
+		assertTrue(testTree.remove(60));
+		assertEquals(70, testTree.getRoot().GetElement());
+		assertTrue(testTree.remove(70));
+		assertEquals(75, testTree.getRoot().GetElement());
 		//testTree.printTree();
 		//assertTrue(testTree.remove(50));
 	}
