@@ -207,10 +207,11 @@ public class BST<T extends Comparable<? super T>> {
 			 }
 		 }
 		 currNode.element = getMinLeftElementOfRightSubtree(currNode.right);
+		 currNode.right = DeleteMinLeftElementOfRightSubtree(currNode.right);
 		 return currNode;
 	 }
 	 
-	 private BinaryNode getMinLeftElementOfRightSubtree(BinaryNode currNode)
+	 private T getMinLeftElementOfRightSubtree(BinaryNode currNode)
 	 {
 		 if (currNode.left != null)
 		 {
@@ -220,6 +221,18 @@ public class BST<T extends Comparable<? super T>> {
 		 currNode = null;
 		 return tempElement;
 	 } 
+	 private BinaryNode DeleteMinLeftElementOfRightSubtree(BinaryNode currNode)
+	 {
+		 if (currNode.left == null)
+		 {
+			 currNode = null;
+		 }
+		 else
+		 {
+			 currNode.left = DeleteMinLeftElementOfRightSubtree(currNode.left);
+		 }
+		 return currNode;
+	 }
 	 
 	 private int getNumberOfChildren(BinaryNode node)
 	 {
