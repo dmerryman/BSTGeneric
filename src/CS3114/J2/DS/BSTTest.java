@@ -88,8 +88,6 @@ class BSTTest {
 		assertEquals(75, testTree.getRoot().GetElement());
 		assertTrue(testTree.remove(75));
 		assertEquals(40, testTree.getRoot().GetElement());
-		//testTree.printTree();
-		//assertTrue(testTree.remove(50));
 	}
 	
 	@Test
@@ -110,12 +108,42 @@ class BSTTest {
 
 	@Test
 	void testCapWith() {
-		fail("Not yet implemented");
+		BST<Integer> testTree = new BST<Integer>();
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(75);
+		testTree.insert(60);
+		testTree.insert(80);
+		testTree.insert(55);
+		testTree.insert(70);
+		testTree.capWith(65);
+		assertNull(testTree.find(70));
+		assertNull(testTree.find(75));
+		assertNull(testTree.find(80));
+		assertEquals(55, testTree.find(55));
 	}
 
 	@Test
 	void testEqualsObject() {
-		fail("Not yet implemented");
+		BST<Integer> testTree = new BST<Integer>();
+		BST<Integer> otherTestTree = new BST<Integer>();
+		BST<String> stringTree = new BST<String>();
+		testTree.insert(10);
+		testTree.insert(5);
+		testTree.insert(15);
+		testTree.insert(20);
+		testTree.insert(1);
+		otherTestTree.insert(10);
+		otherTestTree.insert(5);
+		otherTestTree.insert(15);
+		otherTestTree.insert(20);
+		otherTestTree.insert(1);
+		stringTree.insert("words");
+		assertFalse(testTree.equals(null));
+		assertFalse(testTree.equals(stringTree));
+		assertTrue(testTree.equals(otherTestTree));
+		otherTestTree.remove(10);
+		assertFalse(testTree.equals(otherTestTree));
 	}
-
 }
