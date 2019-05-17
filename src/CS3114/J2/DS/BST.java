@@ -144,6 +144,16 @@ public class BST<T extends Comparable<? super T>> {
 			 else
 			 {
 				 // Insert from the pool if possible.
+				 BinaryNode tempNode = getElementFromPool(pool, elementToInsert);
+				 if (tempNode != null)
+				 {
+					 tempNode.right = null;
+					 currNode = tempNode;
+				 }
+				 else
+				 {
+					 currNode = new BinaryNode(elementToInsert);
+				 }
 			 }
 		 }
 		 int comparisonResult = currNode.compareTo(elementToInsert);
@@ -156,6 +166,31 @@ public class BST<T extends Comparable<? super T>> {
 			 currNode.right = insert(currNode.right, elementToInsert);
 		 }
 		 return currNode;
+	 }
+	 
+	 private BinaryNode getElementFromPool(BinaryNode currPool, T elementToCheckFor)
+	 {
+		 if (currPool == null)
+		 {
+			 return currPool;
+		 }
+		 int comparisonResult = currPool.compareTo(elementToCheckFor);
+		 if (comparisonResult == 0)
+		 {
+			 // remove and return node.
+			 return currPool;
+		 }
+		 else if (comparisonResult < 0)
+		 {
+			 // go right
+			 return getElementFromPool(currPool.right, elementToCheckFor);
+		 }
+		 else if (comparisonResult > 0)
+		 {
+			 // not found.
+			 return null;
+		 }
+		 return null;
 	 }
 	 
 	 // Delete element matching x from the BST, if present. Return true if
@@ -187,6 +222,8 @@ public class BST<T extends Comparable<? super T>> {
 			 if (pSize != 0)
 			 {
 				 // Add node to the pool if theres space.
+				 System.out.println(" Attempting to insert " + elementToRemove + " into pool");
+				 insertIntoPool(currNode);
 			 }
 			 currNode = deleteHelper(currNode); 
 		 }
@@ -203,6 +240,48 @@ public class BST<T extends Comparable<? super T>> {
 			 currNode.right = remove(currNode.right, elementToRemove);
 		 }
 		 return currNode;
+	 }
+	 
+	 private void insertIntoPool(BinaryNode nodeToInsert)
+	 {
+		 if (getNumberOfElementsInPool(pool, 0) < pSize)
+		 {
+			 nodeToInsert.left = null;
+			 nodeToInsert.right = null;
+			 pool = insertIntoPoolHelper(pool, nodeToInsert);
+		 }
+	 }
+	 
+	 private BinaryNode insertIntoPoolHelper(BinaryNode currPool, BinaryNode nodeToInsert)
+	 {
+		 if (currPool == null)
+		 {
+			 currPool = nodeToInsert;
+		 }
+		 int comparisonResult = currPool.compareTo(nodeToInsert.element);
+		 if (comparisonResult > 0)
+		 {
+			 // shift em down.
+			 BinaryNode tempNode = currPool;
+			 currPool = nodeToInsert;
+			 currPool.right = tempNode;
+		 }
+		 else if (comparisonResult < 0)
+		 {
+			 // go right.
+			 currPool.right = insertIntoPoolHelper(currPool.right, nodeToInsert);
+		 }
+		 return currPool;
+	 }
+	 
+	 private int getNumberOfElementsInPool(BinaryNode currPoolNode, int currLevel)
+	 {
+		 if (currPoolNode != null)
+		 {
+			 currLevel++;
+			 currLevel = getNumberOfElementsInPool(currPoolNode.right, currLevel);
+		 }
+		 return currLevel;
 	 }
 	 
 	 private BinaryNode deleteHelper(BinaryNode currNode)
