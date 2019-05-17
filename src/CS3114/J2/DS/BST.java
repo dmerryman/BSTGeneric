@@ -137,7 +137,14 @@ public class BST<T extends Comparable<? super T>> {
 	 {
 		 if (currNode == null)
 		 {
-			 return new BinaryNode(elementToInsert);
+			 if (pSize == 0)
+			 {
+				 currNode = new BinaryNode(elementToInsert);
+			 }
+			 else
+			 {
+				 // Insert from the pool if possible.
+			 }
 		 }
 		 int comparisonResult = currNode.compareTo(elementToInsert);
 		 if (comparisonResult > 0)
@@ -177,6 +184,10 @@ public class BST<T extends Comparable<? super T>> {
 		 {
 			 // Element found.
 			 System.out.println("  Removing element");
+			 if (pSize != 0)
+			 {
+				 // Add node to the pool if theres space.
+			 }
 			 currNode = deleteHelper(currNode); 
 		 }
 		 else if (comparisonResult > 0)
@@ -278,6 +289,26 @@ public class BST<T extends Comparable<? super T>> {
 	 public void capWith(T x)
 	 {
 		 throw new UnsupportedOperationException("Not implemented yet");
+	 }
+	 
+	 public void clear()
+	 {
+		 root = clearHelper(root);
+	 }
+	 
+	 private BinaryNode clearHelper(BinaryNode currNode)
+	 {
+		 if (currNode != null)
+		 {
+			 currNode.left = clearHelper(currNode.left);
+			 currNode.right = clearHelper(currNode.right);
+			 if (pSize != 0)
+			 {
+				 // Add node to the pool, if possible.
+			 }
+			 currNode = null;
+		 }
+		 return currNode;
 	 }
 	 
 	 // Return true iff other is a BST that has the same physical structure
