@@ -288,7 +288,22 @@ public class BST<T extends Comparable<? super T>> {
 	 // indicates y > x
 	 public void capWith(T x)
 	 {
-		 throw new UnsupportedOperationException("Not implemented yet");
+		 root = capWith(root, x);
+	 }
+	 
+	 private BinaryNode capWith(BinaryNode currNode, T elementToCapWith)
+	 {
+		 if (currNode != null)
+		 {
+			 currNode.left = capWith(currNode.left, elementToCapWith);
+			 currNode.right = capWith(currNode.right, elementToCapWith);
+			 int comparisonResult = currNode.compareTo(elementToCapWith);
+			 if (comparisonResult > 0)
+			 {
+				 currNode = remove(currNode, currNode.element);
+			 }
+		 }
+		 return currNode;
 	 }
 	 
 	 public void clear()
@@ -319,7 +334,38 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: both binary trees are unchanged
 	 public boolean equals(Object other)
 	 {
-		 throw new UnsupportedOperationException("Not implemented yet");
+		 if (other == null)
+		 {
+			 return false;
+		 }
+		 else if (!this.getClass().equals(other.getClass()))
+		 {
+			 return false;
+		 }
+		 BST otherTree = (BST)other;
+		 return this.equals(root, otherTree.getRoot());
+	 }
+	 
+	 private boolean equals(BinaryNode thisTree, BinaryNode otherTree)
+	 {
+		 boolean same = true;
+		 if (thisTree != null && otherTree != null)
+		 {
+			 same = thisTree.element.equals(otherTree.element);
+			 if (same)
+			 {
+				 same = equals(thisTree.left, otherTree.left);
+			 }
+			 if (same)
+			 {
+				 same = equals(thisTree.right, otherTree.right);
+			 }
+		 }
+		 else if ((thisTree == null && otherTree != null) || (thisTree != null && otherTree == null))
+		 {
+			 same = false;
+		 }
+		 return same;
 	 }
 	 
 	 public BinaryNode getRoot()
