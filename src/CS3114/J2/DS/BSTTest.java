@@ -146,4 +146,20 @@ class BSTTest {
 		otherTestTree.remove(10);
 		assertFalse(testTree.equals(otherTestTree));
 	}
+	
+	@Test
+	void testRemoveWithPool()
+	{
+		BST<Integer> testTree = new BST<Integer>(5);
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(75);
+		testTree.insert(60);
+		testTree.insert(80);
+		testTree.insert(55);
+		testTree.insert(70);
+		testTree.remove(60);
+		assertEquals(60, testTree.getPool().GetElement());
+	}
 }
