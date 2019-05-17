@@ -75,6 +75,8 @@ class BSTTest {
 		testTree.insert(55);
 		testTree.insert(70);
 		assertTrue(testTree.remove(80));
+		assertFalse(testTree.remove(500));
+		assertFalse(testTree.remove(80));
 		assertTrue(testTree.remove(30));
 		assertTrue(testTree.remove(50));
 		assertEquals(55, testTree.getRoot().GetElement());
@@ -84,8 +86,26 @@ class BSTTest {
 		assertEquals(70, testTree.getRoot().GetElement());
 		assertTrue(testTree.remove(70));
 		assertEquals(75, testTree.getRoot().GetElement());
+		assertTrue(testTree.remove(75));
+		assertEquals(40, testTree.getRoot().GetElement());
 		//testTree.printTree();
 		//assertTrue(testTree.remove(50));
+	}
+	
+	@Test
+	void testClear()
+	{
+		BST<Integer> testTree = new BST<Integer>();
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(75);
+		testTree.insert(60);
+		testTree.insert(80);
+		testTree.insert(55);
+		testTree.insert(70);
+		testTree.clear();
+		assertTrue(testTree.isEmpty());
 	}
 
 	@Test
