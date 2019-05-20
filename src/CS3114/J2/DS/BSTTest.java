@@ -161,5 +161,7 @@ class BSTTest {
 		testTree.insert(70);
 		testTree.remove(60);
 		assertEquals(60, testTree.getPool().GetElement());
+		testTree.remove(50);
+		assertEquals(50, testTree.getPool().GetElement());
 	}
 }
