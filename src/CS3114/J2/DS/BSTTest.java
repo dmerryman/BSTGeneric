@@ -164,4 +164,43 @@ class BSTTest {
 		testTree.remove(50);
 		assertEquals(50, testTree.getPool().GetElement());
 	}
+	
+	@Test
+	void testInsertWithPool()
+	{
+		BST<Integer> testTree = new BST<Integer>(5);
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(75);
+		testTree.insert(60);
+		testTree.insert(80);
+		testTree.insert(55);
+		testTree.insert(70);
+		testTree.remove(60);
+		testTree.remove(50);
+		assertEquals(50, testTree.getPool().GetElement());
+		testTree.insert(50);
+		assertEquals(60, testTree.getPool().GetElement());
+		testTree.insert(60);
+		assertNull(testTree.getPool());
+	}
+	
+	@Test
+	void testDeletion()
+	{
+		BST<Integer> testTree = new BST<Integer>();
+		testTree.insert(10);
+		testTree.insert(5);
+		testTree.insert(3);
+		testTree.insert(7);
+		testTree.insert(20);
+		testTree.insert(15);
+		testTree.insert(25);
+		System.out.println("TESTING REMOVAL PRE " + testTree.root);
+		assertEquals(10, testTree.root.element);
+		assertTrue(testTree.remove(10));
+		System.out.println("TESTING REMOVAL POST " + testTree.root);
+		assertEquals(15, testTree.root.element);
+	}
 }
