@@ -25,9 +25,9 @@ public class BST<T extends Comparable<? super T>> {
 		// Post:	(in the new node)
 		//			element == elem
 		//			left == right == null
-		private T element;
-		private BinaryNode left;
-		private BinaryNode right;
+		public T element;
+		public BinaryNode left;
+		public BinaryNode right;
 		public BinaryNode(T elem)
 		{
 			element = elem;
@@ -56,8 +56,8 @@ public class BST<T extends Comparable<? super T>> {
 		}
 	}
 	
-	private BinaryNode root;
-	private BinaryNode pool;
+	public BinaryNode root;
+	public BinaryNode pool;
 	private int pSize;
 	
 	 // Initialize empty BST with no node pool.
@@ -147,6 +147,7 @@ public class BST<T extends Comparable<? super T>> {
 				 BinaryNode tempNode = getElementFromPool(pool, elementToInsert);
 				 if (tempNode != null)
 				 {
+					 removeElementFromPool(elementToInsert);
 					 tempNode.right = null;
 					 currNode = tempNode;
 				 }
@@ -193,6 +194,34 @@ public class BST<T extends Comparable<? super T>> {
 		 return null;
 	 }
 	 
+	 private void removeElementFromPool(T elementToRemove)
+	 {
+		 pool = removeElementFromPoolHelper(pool, elementToRemove);
+	 }
+	 
+	 private BinaryNode removeElementFromPoolHelper(BinaryNode currPool, T elementToRemove)
+	 {
+		 if (currPool == null)
+		 {
+			 return currPool;
+		 }
+		 int comparisonResult = currPool.compareTo(elementToRemove);
+		 if (comparisonResult == 0)
+		 {
+			 currPool = currPool.right;
+		 }
+		 else if (comparisonResult < 0)
+		 {
+			 currPool.right = removeElementFromPoolHelper(currPool.right, elementToRemove);
+		 }
+		 else if (comparisonResult > 0)
+		 {
+			 // Element not found. This shouldn't execute, assuming we just added an element
+			 // from the pool.
+		 }
+		 return currPool;
+	 }
+	 
 	 // Delete element matching x from the BST, if present. Return true if
 	 // matching element is removed from the tree and false otherwise.
 	 // Pre: x is null or points to a valid object of type T
@@ -200,9 +229,9 @@ public class BST<T extends Comparable<? super T>> {
 	 public boolean remove(T x)
 	 {
 		 int numElementsBeforeRemoval = getNumberOfElementsInTree(root, 0);
-		 System.out.println("Tree has " + numElementsBeforeRemoval + " nodes before removal.");
+		 //System.out.println("Tree has " + numElementsBeforeRemoval + " nodes before removal.");
 		 root = remove(root, x);
-		 System.out.println("Tree has " +  getNumberOfElementsInTree(root, 0) + " nodes after removal");
+		 //System.out.println("Tree has " +  getNumberOfElementsInTree(root, 0) + " nodes after removal");
 		 return (numElementsBeforeRemoval - 1 == getNumberOfElementsInTree(root, 0));
 	 }
 	 
@@ -210,19 +239,19 @@ public class BST<T extends Comparable<? super T>> {
 	 {
 		 if (currNode == null)
 		 {
-			 System.out.println(" Element not found");
+			 //System.out.println(" Element not found");
 			 return currNode;
 		 }
-		 System.out.println(" Comparing " + elementToRemove + " to " + currNode.element);
+		 //System.out.println(" Comparing " + elementToRemove + " to " + currNode.element);
 		 int comparisonResult = currNode.compareTo(elementToRemove);
 		 if (comparisonResult == 0)
 		 {
 			 // Element found.
-			 System.out.println("  Removing element");
+			 //System.out.println("  Removing element");
 			 if (pSize != 0)
 			 {
 				 // Add node to the pool if theres space.
-				 System.out.println(" Attempting to insert " + elementToRemove + " into pool");
+				 //System.out.println(" Attempting to insert " + elementToRemove + " into pool");
 				 insertIntoPool(currNode);
 			 }
 			 currNode = deleteHelper(currNode); 
@@ -230,13 +259,13 @@ public class BST<T extends Comparable<? super T>> {
 		 else if (comparisonResult > 0)
 		 {
 			 // Look left.
-			 System.out.println("  Proceeding left");
+			 //System.out.println("  Proceeding left");
 			 currNode.left = remove(currNode.left, elementToRemove);
 		 }
 		 else if (comparisonResult < 0)
 		 {
 			 // Look right.
-			 System.out.println("  Proceeding right");
+			 //System.out.println("  Proceeding right");
 			 currNode.right = remove(currNode.right, elementToRemove);
 		 }
 		 return currNode;
@@ -286,11 +315,12 @@ public class BST<T extends Comparable<? super T>> {
 	 
 	 private BinaryNode deleteHelper(BinaryNode currNode)
 	 {
-		 System.out.println("   Deleting node with " + currNode.element);
+		 //System.out.println("current node: " + currNode.toString());
+		 //System.out.println("   Deleting node with " + currNode.element);
 		 int numberOfChildren = getNumberOfChildren(currNode);
 		 if (numberOfChildren == 0)
 		 {
-			 System.out.println("     No children. Basic removal");
+			 //System.out.println("     No children. Basic removal");
 			 currNode = null;
 			 return currNode;
 		 }
@@ -298,19 +328,36 @@ public class BST<T extends Comparable<? super T>> {
 		 {
 			 if (currNode.left != null)
 			 {
-				 System.out.println("     Left Child only. Pulling up " + currNode.left.element);
+				 //System.out.println("     Left Child only. Pulling up " + currNode.left.element);
 				 return currNode.left;
 			 }
 			 else if (currNode.right != null)
 			 {
-				 System.out.println("     Right Child only. Pulling up " + currNode.right.element);
+				 //System.out.println("     Right Child only. Pulling up " + currNode.right.element);
 				 return currNode.right;
 			 }
 		 }
-		 System.out.println("     Two children. Complicated. Getting the minimum left element from root " + currNode.right.element);
-		 currNode.element = getMinLeftElementOfRightSubtree(currNode.right);
-		 System.out.println("     Deleting the minimum left element from root " + currNode.right.element);
+		 BinaryNode tempNode = getMinLeftNodeOfRightSubtree(currNode.right);
 		 currNode.right = DeleteMinLeftElementOfRightSubtree(currNode.right);
+		 tempNode.left = currNode.left;
+		 tempNode.right = currNode.right;
+		 currNode = tempNode;
+		 //TESTING
+		 
+		 //System.out.println("     Two children. Complicated. Getting the minimum left element from root " + currNode.right.element);
+		 //currNode.element = getMinLeftElementOfRightSubtree(currNode.right);
+		 //System.out.println("     Deleting the minimum left element from root " + currNode.right.element);
+		 //currNode.right = DeleteMinLeftElementOfRightSubtree(currNode.right);
+		 //System.out.println("returning node: " + currNode.toString());
+		 return currNode;
+	 }
+	 
+	 private BinaryNode getMinLeftNodeOfRightSubtree(BinaryNode currNode)
+	 {
+		 if (currNode.left != null)
+		 {
+			 return getMinLeftNodeOfRightSubtree(currNode.left);
+		 }
 		 return currNode;
 	 }
 	 
