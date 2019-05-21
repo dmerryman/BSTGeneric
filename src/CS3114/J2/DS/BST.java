@@ -124,9 +124,9 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: the binary tree does not contain x
 	 public boolean insert(T x)
 	 {
-		 int numElementsBeforeInsert = getNumberOfElementsInTree(root, 0);
+		 int numberOfElementsBeforeInsert = numberOfElementsInTree;
 		 root = insert(root, x);
-		 return (numElementsBeforeInsert + 1 == getNumberOfElementsInTree(root, 0)); 
+		 return (numberOfElementsBeforeInsert + 1 == numberOfElementsInTree);
 	 }
 	 
 	 private BinaryNode insert(BinaryNode currNode, T elementToInsert)
@@ -152,6 +152,7 @@ public class BST<T extends Comparable<? super T>> {
 					 currNode = new BinaryNode(elementToInsert);
 				 }
 			 }
+			 numberOfElementsInTree++;
 		 }
 		 int comparisonResult = currNode.compareTo(elementToInsert);
 		 if (comparisonResult > 0)
@@ -224,11 +225,11 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: the binary tree does not contain x
 	 public boolean remove(T x)
 	 {
-		 int numElementsBeforeRemoval = getNumberOfElementsInTree(root, 0);
 		 //System.out.println("Tree has " + numElementsBeforeRemoval + " nodes before removal.");
+		 int numberOfElementsBeforeRemoval = numberOfElementsInTree;
 		 root = remove(root, x);
 		 //System.out.println("Tree has " +  getNumberOfElementsInTree(root, 0) + " nodes after removal");
-		 return (numElementsBeforeRemoval - 1 == getNumberOfElementsInTree(root, 0));
+		 return (numberOfElementsBeforeRemoval - 1 == numberOfElementsInTree);
 	 }
 	 
 	 private BinaryNode remove(BinaryNode currNode, T elementToRemove)
@@ -257,7 +258,7 @@ public class BST<T extends Comparable<? super T>> {
 				 // Add node to the pool if theres space.
 				 insertIntoPool(tempNode);
 			 }
-			 
+			 numberOfElementsInTree--;
 		 }
 		 else if (comparisonResult > 0)
 		 {
