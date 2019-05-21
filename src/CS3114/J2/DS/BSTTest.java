@@ -185,4 +185,21 @@ class BSTTest {
 		testTree.insert(60);
 		assertNull(testTree.pool);
 	}
+	
+	@Test
+	void testIsFull()
+	{
+		BST<Integer> testTree = new BST<Integer>();
+		testTree.insert(50);
+		testTree.insert(30);
+		testTree.insert(40);
+		testTree.insert(20);
+		testTree.insert(75);
+		testTree.insert(60);
+		assertFalse(testTree.isFull());
+		testTree.insert(80);
+		assertTrue(testTree.isFull());
+		testTree.remove(80);
+		assertFalse(testTree.isFull());
+	}
 }
