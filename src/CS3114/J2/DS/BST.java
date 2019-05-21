@@ -56,9 +56,10 @@ public class BST<T extends Comparable<? super T>> {
 		}
 	}
 	
-	public BinaryNode root;
-	public BinaryNode pool;
-	private int pSize;
+	public BinaryNode root = null;
+	public BinaryNode pool = null;
+	private int pSize = 0;
+	private int numberOfElementsInTree = 0;
 	
 	 // Initialize empty BST with no node pool.
 	 // Pre: none
@@ -66,9 +67,6 @@ public class BST<T extends Comparable<? super T>> {
 	 // root == null, pool == null, pSize = 0
 	 public BST()
 	 {
-		 root = null;
-		 pool = null;
-		 pSize = 0;
 	 }
 	 
 	 // Initialize empty BST with a node pool of up to pSize nodes.
@@ -77,8 +75,6 @@ public class BST<T extends Comparable<? super T>> {
 	 // root == null, pool = null, pSize == Sz 
 	 public BST(int Sz)
 	 {
-		 root = null;
-		 pool = null;
 		 pSize = Sz;
 	 }
 	 
