@@ -520,4 +520,28 @@ public class BST<T extends Comparable<? super T>> {
 			 printTree(currNode.right, level + 1);
 		 }
 	 }
+	 
+	 public boolean isFull()
+	 {
+		 return isFullHelper(root);
+	 }
+	 
+	 public boolean isFullHelper(BinaryNode currNode)
+	 {
+		 boolean isFull = true;
+		 if (currNode != null)
+		 {
+			 isFull = ((currNode.left != null && currNode.right != null) ||
+					 (currNode.left == null && currNode.right == null));
+			 if (isFull)
+			 {
+				 isFull = isFullHelper(currNode.left);
+			 }
+			 if (isFull)
+			 {
+				 isFull = isFullHelper(currNode.right);
+			 }
+		 }
+		 return isFull;
+	 }
 }
