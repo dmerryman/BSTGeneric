@@ -473,10 +473,10 @@ public class BST<T extends Comparable<? super T>> {
 			 return false;
 		 }
 		 BST otherTree = (BST)other;
-		 return this.equals(root, otherTree.getRoot());
+		 return this.equalsHelper(root, otherTree.root);
 	 }
 	 
-	 private boolean equals(BinaryNode thisTree, BinaryNode otherTree)
+	 private boolean equalsHelper(BinaryNode thisTree, BinaryNode otherTree)
 	 {
 		 boolean same = true;
 		 if (thisTree != null && otherTree != null)
@@ -484,11 +484,11 @@ public class BST<T extends Comparable<? super T>> {
 			 same = thisTree.element.equals(otherTree.element);
 			 if (same)
 			 {
-				 same = equals(thisTree.left, otherTree.left);
+				 same = equalsHelper(thisTree.left, otherTree.left);
 			 }
 			 if (same)
 			 {
-				 same = equals(thisTree.right, otherTree.right);
+				 same = equalsHelper(thisTree.right, otherTree.right);
 			 }
 		 }
 		 else if ((thisTree == null && otherTree != null) || (thisTree != null && otherTree == null))
@@ -498,31 +498,16 @@ public class BST<T extends Comparable<? super T>> {
 		 return same;
 	 }
 	 
-	 public BinaryNode getRoot()
-	 {
-		 return root;
-	 }
-	 
-	 public BinaryNode getPool()
-	 {
-		 return pool;
-	 }
-	 
-	 public int getPoolSize()
-	 {
-		 return pSize;
-	 }
-	 
-	 private int getNumberOfElementsInTree(BinaryNode currNode, int elementCount)
-	 {
-		 if (currNode != null)
-		 {
-			 elementCount++;
-			 elementCount = getNumberOfElementsInTree(currNode.left, elementCount);
-			 elementCount = getNumberOfElementsInTree(currNode.right, elementCount);
-		 }
-		 return elementCount;
-	 }
+//	 private int getNumberOfElementsInTree(BinaryNode currNode, int elementCount)
+//	 {
+//		 if (currNode != null)
+//		 {
+//			 elementCount++;
+//			 elementCount = getNumberOfElementsInTree(currNode.left, elementCount);
+//			 elementCount = getNumberOfElementsInTree(currNode.right, elementCount);
+//		 }
+//		 return elementCount;
+//	 }
 	 
 	 public void printTree()
 	 {
