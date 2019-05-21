@@ -1,5 +1,7 @@
 package CS3114.J2.DS;
 
+import java.util.List;
+
 public class BST<T extends Comparable<? super T>> {
 	// BST<> provides a generic implementation of a binary search tree
 	//
@@ -497,17 +499,6 @@ public class BST<T extends Comparable<? super T>> {
 		 }
 		 return same;
 	 }
-	 
-//	 private int getNumberOfElementsInTree(BinaryNode currNode, int elementCount)
-//	 {
-//		 if (currNode != null)
-//		 {
-//			 elementCount++;
-//			 elementCount = getNumberOfElementsInTree(currNode.left, elementCount);
-//			 elementCount = getNumberOfElementsInTree(currNode.right, elementCount);
-//		 }
-//		 return elementCount;
-//	 }
 	 
 	 public void printTree()
 	 {
