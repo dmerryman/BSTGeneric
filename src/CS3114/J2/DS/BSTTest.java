@@ -9,17 +9,15 @@ class BSTTest {
 	@Test
 	void testBST() {
 		BST<Integer> testBST = new BST<Integer>();
-		assertNull(testBST.getRoot());
-		assertNull(testBST.getPool());
-		assertEquals(0, testBST.getPoolSize());
+		assertNull(testBST.root);
+		assertNull(testBST.pool);
 	}
 
 	@Test
 	void testBSTInt() {
 		BST<Integer> testBST = new BST<Integer>(5);
-		assertNull(testBST.getRoot());
-		assertNull(testBST.getPool());
-		assertEquals(5, testBST.getPoolSize());
+		assertNull(testBST.root);
+		assertNull(testBST.pool);
 	}
 
 	@Test
@@ -49,9 +47,9 @@ class BSTTest {
 	void testInsert() {
 		BST<Integer> testTree = new BST<Integer>();
 		assertTrue(testTree.insert(50));
-		assertEquals(0, testTree.getRoot().compareTo(50));
+		assertEquals(0, testTree.root.compareTo(50));
 		assertFalse(testTree.insert(50));
-		assertEquals(0, testTree.getRoot().compareTo(50));
+		assertEquals(0, testTree.root.compareTo(50));
 		assertTrue(testTree.insert(30));
 		assertTrue(testTree.insert(40));
 		assertTrue(testTree.insert(75));
@@ -59,7 +57,8 @@ class BSTTest {
 		assertTrue(testTree.insert(80));
 		assertTrue(testTree.insert(55));
 		assertTrue(testTree.insert(70));
-		assertEquals(0, testTree.getRoot().compareTo(50));
+		assertEquals(0, testTree.root.compareTo(50));
+		assertEquals(55, testTree.root.right.left.left.element);
 	}
 	
 	@Test
@@ -79,15 +78,15 @@ class BSTTest {
 		assertFalse(testTree.remove(80));
 		assertTrue(testTree.remove(30));
 		assertTrue(testTree.remove(50));
-		assertEquals(55, testTree.getRoot().GetElement());
+		assertEquals(55, testTree.root.GetElement());
 		assertTrue(testTree.remove(55));
-		assertEquals(60, testTree.getRoot().GetElement());
+		assertEquals(60, testTree.root.GetElement());
 		assertTrue(testTree.remove(60));
-		assertEquals(70, testTree.getRoot().GetElement());
+		assertEquals(70, testTree.root.GetElement());
 		assertTrue(testTree.remove(70));
-		assertEquals(75, testTree.getRoot().GetElement());
+		assertEquals(75, testTree.root.GetElement());
 		assertTrue(testTree.remove(75));
-		assertEquals(40, testTree.getRoot().GetElement());
+		assertEquals(40, testTree.root.GetElement());
 	}
 	
 	@Test
@@ -180,10 +179,10 @@ class BSTTest {
 		testTree.insert(70);
 		testTree.remove(60);
 		testTree.remove(50);
-		assertEquals(50, testTree.getPool().GetElement());
+		assertEquals(50, testTree.pool.GetElement());
 		testTree.insert(50);
-		assertEquals(60, testTree.getPool().GetElement());
+		assertEquals(60, testTree.pool.GetElement());
 		testTree.insert(60);
-		assertNull(testTree.getPool());
+		assertNull(testTree.pool);
 	}
 }
