@@ -93,10 +93,10 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: the binary tree is unchanged
 	 public T find(T x)
 	 {
-		 return find(root, x);
+		 return findHelper(root, x);
 	 }
 	 
-	 private T find(BinaryNode currNode, T elementToFind)
+	 private T findHelper(BinaryNode currNode, T elementToFind)
 	 {
 		 if (currNode == null)
 		 {
@@ -109,11 +109,11 @@ public class BST<T extends Comparable<? super T>> {
 		 }
 		 else if (comparisonResult > 0)
 		 {
-			 return find(currNode.left, elementToFind);
+			 return findHelper(currNode.left, elementToFind);
 		 }
 		 else if (comparisonResult < 0)
 		 {
-			 return find(currNode.right, elementToFind);
+			 return findHelper(currNode.right, elementToFind);
 		 }
 		 return null;
 	 }
@@ -125,11 +125,11 @@ public class BST<T extends Comparable<? super T>> {
 	 public boolean insert(T x)
 	 {
 		 int numberOfElementsBeforeInsert = numberOfElementsInTree;
-		 root = insert(root, x);
+		 root = insertHelper(root, x);
 		 return (numberOfElementsBeforeInsert + 1 == numberOfElementsInTree);
 	 }
 	 
-	 private BinaryNode insert(BinaryNode currNode, T elementToInsert)
+	 private BinaryNode insertHelper(BinaryNode currNode, T elementToInsert)
 	 {
 		 if (currNode == null)
 		 {
@@ -157,11 +157,11 @@ public class BST<T extends Comparable<? super T>> {
 		 int comparisonResult = currNode.compareTo(elementToInsert);
 		 if (comparisonResult > 0)
 		 {
-			 currNode.left = insert(currNode.left, elementToInsert);
+			 currNode.left = insertHelper(currNode.left, elementToInsert);
 		 }
 		 else if (comparisonResult < 0)
 		 {
-			 currNode.right = insert(currNode.right, elementToInsert);
+			 currNode.right = insertHelper(currNode.right, elementToInsert);
 		 }
 		 return currNode;
 	 }
@@ -227,12 +227,12 @@ public class BST<T extends Comparable<? super T>> {
 	 {
 		 //System.out.println("Tree has " + numElementsBeforeRemoval + " nodes before removal.");
 		 int numberOfElementsBeforeRemoval = numberOfElementsInTree;
-		 root = remove(root, x);
+		 root = removeHelper(root, x);
 		 //System.out.println("Tree has " +  getNumberOfElementsInTree(root, 0) + " nodes after removal");
 		 return (numberOfElementsBeforeRemoval - 1 == numberOfElementsInTree);
 	 }
 	 
-	 private BinaryNode remove(BinaryNode currNode, T elementToRemove)
+	 private BinaryNode removeHelper(BinaryNode currNode, T elementToRemove)
 	 {
 		 if (currNode == null)
 		 {
@@ -264,13 +264,13 @@ public class BST<T extends Comparable<? super T>> {
 		 {
 			 // Look left.
 			 //System.out.println("  Proceeding left");
-			 currNode.left = remove(currNode.left, elementToRemove);
+			 currNode.left = removeHelper(currNode.left, elementToRemove);
 		 }
 		 else if (comparisonResult < 0)
 		 {
 			 // Look right.
 			 //System.out.println("  Proceeding right");
-			 currNode.right = remove(currNode.right, elementToRemove);
+			 currNode.right = removeHelper(currNode.right, elementToRemove);
 		 }
 		 return currNode;
 	 }
@@ -430,7 +430,7 @@ public class BST<T extends Comparable<? super T>> {
 			 int comparisonResult = currNode.compareTo(elementToCapWith);
 			 if (comparisonResult > 0)
 			 {
-				 currNode = remove(currNode, currNode.element);
+				 currNode = removeHelper(currNode, currNode.element);
 			 }
 		 }
 		 return currNode;
