@@ -248,13 +248,20 @@ public class BST<T extends Comparable<? super T>> {
 		 {
 			 // Element found.
 			 //System.out.println("  Removing element");
+//			 if (pSize != 0)
+//			 {
+//				 // Add node to the pool if theres space.
+//				 //System.out.println(" Attempting to insert " + elementToRemove + " into pool");
+//				 insertIntoPool(currNode);
+//			 }
+			 BinaryNode tempNode = currNode;
+			 currNode = deleteHelper(currNode); 
 			 if (pSize != 0)
 			 {
 				 // Add node to the pool if theres space.
-				 //System.out.println(" Attempting to insert " + elementToRemove + " into pool");
-				 insertIntoPool(currNode);
+				 insertIntoPool(tempNode);
 			 }
-			 currNode = deleteHelper(currNode); 
+			 
 		 }
 		 else if (comparisonResult > 0)
 		 {
