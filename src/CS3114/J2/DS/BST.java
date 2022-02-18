@@ -227,10 +227,8 @@ public class BST<T extends Comparable<? super T>> {
 	 // Post: the binary tree does not contain x
 	 public boolean remove(T x)
 	 {
-		 //System.out.println("Tree has " + numElementsBeforeRemoval + " nodes before removal.");
 		 int numberOfElementsBeforeRemoval = numberOfElementsInTree;
 		 root = removeHelper(root, x);
-		 //System.out.println("Tree has " +  getNumberOfElementsInTree(root, 0) + " nodes after removal");
 		 return (numberOfElementsBeforeRemoval - 1 == numberOfElementsInTree);
 	 }
 	 
